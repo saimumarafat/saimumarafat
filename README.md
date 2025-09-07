@@ -1,5 +1,5 @@
 - 👋 Hi, I’m @saimumarafat
-- 👀 I’m interested in cricket
+- 👀 I’m interested in football 
 - 🌱 I’m currently learning coding
 - 💞️ I’m looking to collaborate on GitHub
 - 📫 How to reach me Facebook
