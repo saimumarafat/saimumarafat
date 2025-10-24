@@ -49,6 +49,23 @@
     <!-- Navigation -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
         <div class="container">
+            <div class="nav-social">
+                <a href="https://github.com/saimumarafat" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/saimumarafat" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://x.com/Saimum_11" target="_blank" rel="noopener noreferrer" aria-label="X Profile">
+                    <i class="fab fa-x-twitter"></i>
+                </a>
+                <a href="https://facebook.com/thisissaimum" target="_blank" rel="noopener noreferrer" aria-label="Facebook Profile">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://instagram.com/thisissaimum" target="_blank" rel="noopener noreferrer" aria-label="Instagram Profile">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
             <div class="logo">
                 <a href="#home" aria-label="Home">
                     <h2><span class="logo-bracket">&lt;</span>Saimum Arafat<span class="logo-bracket">/&gt;</span></h2>
@@ -63,7 +80,12 @@
                     <li role="none"><a href="#contact" role="menuitem" class="nav-btn nav-btn-primary">Contact</a></li>
                 </ul>
                 <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light theme">
-                    <i class="fas fa-sun"></i>
+                    <span class="theme-option" data-theme="dark">
+                        <i class="fas fa-moon"></i>
+                    </span>
+                    <span class="theme-option" data-theme="light">
+                        <i class="fas fa-sun"></i>
+                    </span>
                 </button>
             </div>
             <button class="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
@@ -78,6 +100,7 @@
     <main id="main-content">
         <!-- Hero Section - Professional Layout with Photo -->
         <section id="home" class="hero">
+            <canvas id="dotCanvas" class="dot-canvas"></canvas>
             <div class="particles" aria-hidden="true"></div>
             <div class="container">
                 <div class="hero-content">
@@ -107,17 +130,6 @@
                             <div class="image-border"></div>
                             <div class="image-glow"></div>
                         </div>
-                        <div class="hero-social">
-                            <a href="https://github.com/saimumarafat" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="https://linkedin.com/in/saimumarafat" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
-                                <i class="fab fa-linkedin"></i>
-                            </a>
-                            <a href="https://x.com/Saimum_11" target="_blank" rel="noopener noreferrer" aria-label="X Profile">
-                                <i class="fab fa-x-twitter"></i>
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -125,6 +137,7 @@
 
         <!-- About Section -->
         <section id="about" class="about">
+            <canvas id="aboutDotCanvas" class="dot-canvas"></canvas>
             <div class="container">
                 <h2 class="section-title">About Me</h2>
                 <div class="about-content">
@@ -178,6 +191,7 @@
 
         <!-- Skills Section -->
         <section id="skills" class="skills">
+            <canvas id="skillsDotCanvas" class="dot-canvas"></canvas>
             <div class="container">
                 <h2 class="section-title">Technical Expertise</h2>
                 <div class="skills-grid">
@@ -185,48 +199,60 @@
                         <div class="skill-icon">
                             <i class="fab fa-html5"></i>
                         </div>
-                        <h3>Frontend Development</h3>
-                        <p>HTML5, CSS3, JavaScript, TypeScript, Responsive Design, Web Accessibility</p>
+                        <div class="skill-content">
+                            <h3>Frontend Development</h3>
+                            <p>HTML5, CSS3, JavaScript, TypeScript, Responsive Design, Web Accessibility</p>
+                        </div>
                     </article>
                     
                     <article class="skill-card" tabindex="0" role="button" aria-expanded="false">
                         <div class="skill-icon">
                             <i class="fab fa-react"></i>
                         </div>
-                        <h3>Modern Frameworks</h3>
-                        <p>React, Vue.js, Angular, Next.js, Nuxt.js, Redux, Context API</p>
+                        <div class="skill-content">
+                            <h3>Modern Frameworks</h3>
+                            <p>React, Vue.js, Angular, Next.js, Nuxt.js, Redux, Context API</p>
+                        </div>
                     </article>
                     
                     <article class="skill-card" tabindex="0" role="button" aria-expanded="false">
                         <div class="skill-icon">
                             <i class="fab fa-node-js"></i>
                         </div>
-                        <h3>Backend Development</h3>
-                        <p>Node.js, Express, Python, Django, REST APIs, GraphQL</p>
+                        <div class="skill-content">
+                            <h3>Backend Development</h3>
+                            <p>Node.js, Express, Python, Django, REST APIs, GraphQL</p>
+                        </div>
                     </article>
                     
                     <article class="skill-card" tabindex="0" role="button" aria-expanded="false">
                         <div class="skill-icon">
                             <i class="fas fa-database"></i>
                         </div>
-                        <h3>Databases</h3>
-                        <p>MongoDB, PostgreSQL, MySQL, Firebase, Redis</p>
+                        <div class="skill-content">
+                            <h3>Databases</h3>
+                            <p>MongoDB, PostgreSQL, MySQL, Firebase, Redis</p>
+                        </div>
                     </article>
                     
                     <article class="skill-card" tabindex="0" role="button" aria-expanded="false">
                         <div class="skill-icon">
                             <i class="fas fa-cloud"></i>
                         </div>
-                        <h3>Cloud & DevOps</h3>
-                        <p>AWS, Azure, Docker, Kubernetes, CI/CD, Git, GitHub Actions</p>
+                        <div class="skill-content">
+                            <h3>Cloud & DevOps</h3>
+                            <p>AWS, Azure, Docker, Kubernetes, CI/CD, Git, GitHub Actions</p>
+                        </div>
                     </article>
                     
                     <article class="skill-card" tabindex="0" role="button" aria-expanded="false">
                         <div class="skill-icon">
                             <i class="fas fa-pencil-ruler"></i>
                         </div>
-                        <h3>Design Tools</h3>
-                        <p>Figma, Adobe XD, Sketch, Photoshop, Prototyping</p>
+                        <div class="skill-content">
+                            <h3>Design Tools</h3>
+                            <p>Figma, Adobe XD, Sketch, Photoshop, Prototyping</p>
+                        </div>
                     </article>
                 </div>
             </div>
@@ -234,33 +260,24 @@
 
         <!-- GitHub Stats Section -->
         <section id="github-stats" class="github-stats">
+            <canvas id="githubDotCanvas" class="dot-canvas"></canvas>
             <div class="container">
                 <h2 class="section-title">GitHub Activity</h2>
                 <p class="github-subtitle">Check out my coding journey and contributions</p>
-                
-                <!-- Refresh Button -->
-                <div class="github-refresh">
-                    <button id="refreshStatsBtn" class="refresh-btn" aria-label="Refresh GitHub stats">
-                        <i class="fas fa-sync-alt"></i> Refresh Stats
-                    </button>
-                    <span class="refresh-info">Auto-refreshes every 30 minutes</span>
-                </div>
                 
                 <div class="github-content">
                     <!-- GitHub Overview Cards -->
                     <div class="github-overview">
                         <div class="stats-row">
                             <div class="stat-item">
-                                <img id="github-stats-img" src="https://github-readme-stats.vercel.app/api?username=saimumarafat&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0A0A0A&title_color=00D9FF&icon_color=00D9FF&text_color=A0A0A0&cache_seconds=1800&random=1" alt="GitHub Stats" loading="lazy">
+                                <a href="https://github.com/saimumarafat" target="_blank" rel="noopener noreferrer" aria-label="View GitHub Profile">
+                                    <img id="github-stats-img" src="https://github-readme-stats.vercel.app/api?username=saimumarafat&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0A0A0A&title_color=00D9FF&icon_color=00D9FF&text_color=A0A0A0&cache_seconds=300" alt="GitHub Stats" loading="eager">
+                                </a>
                             </div>
                             <div class="stat-item">
-                                <img id="github-langs-img" src="https://github-readme-stats.vercel.app/api/top-langs/?username=saimumarafat&layout=compact&theme=tokyonight&hide_border=true&bg_color=0A0A0A&title_color=00D9FF&text_color=A0A0A0&cache_seconds=1800&random=1" alt="Top Languages" loading="lazy">
-                            </div>
-                        </div>
-                        
-                        <div class="stats-row">
-                            <div class="stat-item stat-item-full">
-                                <img id="github-streak-img" src="https://github-readme-streak-stats.herokuapp.com/?user=saimumarafat&theme=tokyonight&hide_border=true&background=0A0A0A&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF&date_format=j%20M%5B%20Y%5D&random=1" alt="GitHub Streak" loading="lazy">
+                                <a href="https://github.com/saimumarafat?tab=repositories" target="_blank" rel="noopener noreferrer" aria-label="View GitHub Repositories">
+                                    <img id="github-langs-img" src="https://github-readme-stats.vercel.app/api/top-langs/?username=saimumarafat&layout=compact&theme=tokyonight&hide_border=true&bg_color=0A0A0A&title_color=00D9FF&text_color=A0A0A0&cache_seconds=300" alt="Top Languages" loading="eager">
+                                </a>
                             </div>
                         </div>
                         
@@ -268,7 +285,9 @@
                         <div class="contribution-section">
                             <h3>Contribution Activity</h3>
                             <div class="contribution-graph">
-                                <img id="github-graph-img" src="https://github-readme-activity-graph.vercel.app/graph?username=saimumarafat&theme=tokyo-night&hide_border=true&bg_color=0A0A0A&color=00D9FF&line=00D9FF&point=A0A0A0&area=true&area_color=00D9FF&random=1" alt="GitHub Contribution Graph" loading="lazy">
+                                <a href="https://github.com/saimumarafat" target="_blank" rel="noopener noreferrer" aria-label="View GitHub Contributions">
+                                    <img id="github-graph-img" src="https://github-readme-activity-graph.vercel.app/graph?username=saimumarafat&theme=tokyo-night&hide_border=true&bg_color=0A0A0A&color=00D9FF&line=00D9FF&point=A0A0A0&area=true&area_color=00D9FF&random=1" alt="GitHub Contribution Graph" loading="lazy">
+                                </a>
                             </div>
                         </div>
                         
@@ -276,7 +295,9 @@
                         <div class="contribution-calendar-section">
                             <h3>Monthly Contribution Calendar</h3>
                             <div class="calendar-container">
-                                <img id="github-calendar-img" src="https://ghchart.rshah.org/00D9FF/saimumarafat" alt="GitHub Contribution Calendar" loading="lazy">
+                                <a href="https://github.com/saimumarafat" target="_blank" rel="noopener noreferrer" aria-label="View GitHub Profile">
+                                    <img id="github-calendar-img" src="https://ghchart.rshah.org/00D9FF/saimumarafat" alt="GitHub Contribution Calendar" loading="lazy">
+                                </a>
                             </div>
                             <div class="calendar-stats">
                                 <div class="calendar-legend">
@@ -299,14 +320,6 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        <!-- GitHub Profile Trophy -->
-                        <div class="trophy-section">
-                            <h3>Achievements</h3>
-                            <div class="trophy-display">
-                                <img id="github-trophy-img" src="https://github-profile-trophy.vercel.app/?username=saimumarafat&theme=tokyonight&no-frame=true&no-bg=true&column=4&margin-w=15&margin-h=15&random=1" alt="GitHub Trophy" loading="lazy">
-                            </div>
-                        </div>
                     </div>
                     
                     <!-- GitHub Profile Link -->
@@ -321,6 +334,7 @@
 
         <!-- Projects Section -->
         <section id="projects" class="projects">
+            <canvas id="projectsDotCanvas" class="dot-canvas"></canvas>
             <div class="container">
                 <h2 class="section-title">Featured Projects</h2>
                 
@@ -365,6 +379,7 @@
 
         <!-- Contact Section -->
         <section id="contact" class="contact">
+            <canvas id="contactDotCanvas" class="dot-canvas"></canvas>
             <div class="container">
                 <h2 class="section-title">Connect With Me</h2>
                 <p class="contact-subtitle">Let's stay connected! Find me on these platforms</p>
@@ -442,22 +457,9 @@
 
     <!-- Footer -->
     <footer class="footer" role="contentinfo">
+        <canvas id="footerDotCanvas" class="dot-canvas"></canvas>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-social">
-                    <a href="https://github.com/saimumarafat" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="https://linkedin.com/in/saimumarafat" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="https://x.com/Saimum_11" target="_blank" rel="noopener noreferrer" aria-label="X Profile">
-                        <i class="fab fa-x-twitter"></i>
-                    </a>
-                    <a href="mailto:saimumarafat4@gmail.com" aria-label="Email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                </div>
                 <p class="footer-text">
                     &copy; <span id="currentYear">2025</span> Saimum Arafat.
                 </p>

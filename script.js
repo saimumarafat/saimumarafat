@@ -14,32 +14,16 @@ window.scrollTo(0, 0);
 
 const themeToggle = document.getElementById('themeToggle');
 const htmlElement = document.documentElement;
-const themeIcon = themeToggle.querySelector('i');
 
-// Check for saved theme preference or default to 'dark'
-const currentTheme = localStorage.getItem('theme') || 'dark';
+// Check for saved theme preference or default to 'light'
+const currentTheme = localStorage.getItem('theme') || 'light';
 htmlElement.setAttribute('data-theme', currentTheme);
-
-// Update icon based on current theme
-function updateThemeIcon(theme) {
-    if (theme === 'light') {
-        themeIcon.classList.remove('fa-sun');
-        themeIcon.classList.add('fa-moon');
-    } else {
-        themeIcon.classList.remove('fa-moon');
-        themeIcon.classList.add('fa-sun');
-    }
-}
-
-// Set initial icon
-updateThemeIcon(currentTheme);
 
 // Toggle theme on button click
 themeToggle.addEventListener('click', () => {
     const newTheme = htmlElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     htmlElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
-    updateThemeIcon(newTheme);
     updateGitHubStats(newTheme);
 });
 
@@ -88,12 +72,6 @@ function updateGitHubStats(theme) {
         langsImg.src = `https://github-readme-stats.vercel.app/api/top-langs/?username=${username}&layout=compact&theme=${config.theme}&hide_border=true&bg_color=${config.bg_color}&title_color=${config.title_color}&text_color=${config.text_color}&cache_seconds=1800&t=${timestamp}`;
     }
     
-    // Update Streak Stats
-    const streakImg = document.getElementById('github-streak-img');
-    if (streakImg) {
-        streakImg.src = `https://github-readme-streak-stats.herokuapp.com/?user=${username}&theme=${config.theme}&hide_border=true&background=${config.bg_color}&ring=${config.ring}&fire=${config.fire}&currStreakLabel=${config.currStreakLabel}&date_format=j%20M%5B%20Y%5D&t=${timestamp}`;
-    }
-    
     // Update Contribution Graph
     const graphImg = document.getElementById('github-graph-img');
     if (graphImg) {
@@ -108,13 +86,6 @@ function updateGitHubStats(theme) {
     if (calendarImg) {
         const calendarColor = isDark ? '00D9FF' : '0EA5E9';
         calendarImg.src = `https://ghchart.rshah.org/${calendarColor}/${username}?t=${timestamp}`;
-    }
-    
-    // Update Trophy
-    const trophyImg = document.getElementById('github-trophy-img');
-    if (trophyImg) {
-        const trophyTheme = isDark ? 'tokyonight' : 'flat';
-        trophyImg.src = `https://github-profile-trophy.vercel.app/?username=${username}&theme=${trophyTheme}&no-frame=true&no-bg=true&column=4&margin-w=15&margin-h=15&t=${timestamp}`;
     }
 }
 
@@ -152,6 +123,444 @@ window.addEventListener('load', () => {
         });
     }
 });
+
+// ===========================
+// Animated Dot Background (MKBHD Style) - Auto Floating Animation
+// ===========================
+const heroCanvas = document.getElementById('dotCanvas');
+const aboutCanvas = document.getElementById('aboutDotCanvas');
+const skillsCanvas = document.getElementById('skillsDotCanvas');
+const githubCanvas = document.getElementById('githubDotCanvas');
+const projectsCanvas = document.getElementById('projectsDotCanvas');
+const contactCanvas = document.getElementById('contactDotCanvas');
+const footerCanvas = document.getElementById('footerDotCanvas');
+
+if (heroCanvas || aboutCanvas || skillsCanvas || githubCanvas || projectsCanvas || contactCanvas || footerCanvas) {
+    let allDots = [];
+    
+    // Configuration - MKBHD exact style
+    const GRID_SPACING = 45; // Exact spacing for complete grid
+    const DOT_SIZE = 1.5; // Small dots like MKBHD
+    const CONNECTION_DISTANCE = 80; // Shorter connections
+    const FLOAT_RANGE = 8; // How far dots float from home position
+    const FLOAT_SPEED = 0.015; // Slow, gentle floating
+    
+    // Get theme-appropriate colors
+    function getDotColor() {
+        const theme = document.documentElement.getAttribute('data-theme');
+        return theme === 'light' ? 'rgba(0, 0, 0, 0.5)' : 'rgba(255, 255, 255, 0.5)';
+    }
+    
+    function getLineColor(opacity) {
+        const theme = document.documentElement.getAttribute('data-theme');
+        const baseOpacity = opacity || 0.15;
+        return theme === 'light' 
+            ? `rgba(0, 0, 0, ${baseOpacity})` 
+            : `rgba(255, 255, 255, ${baseOpacity})`;
+    }
+    
+    // Grid-based Dot class with auto-floating animation
+    class Dot {
+        constructor(x, y, yOffset = 0) {
+            this.homeX = x;
+            this.homeY = y;
+            this.x = x;
+            this.y = y;
+            this.yOffset = yOffset;
+            this.radius = DOT_SIZE;
+            
+            // Random floating parameters for organic movement
+            this.angleX = Math.random() * Math.PI * 2;
+            this.angleY = Math.random() * Math.PI * 2;
+            this.speedX = FLOAT_SPEED + Math.random() * FLOAT_SPEED;
+            this.speedY = FLOAT_SPEED + Math.random() * FLOAT_SPEED;
+            this.floatRangeX = FLOAT_RANGE * (0.5 + Math.random() * 0.5);
+            this.floatRangeY = FLOAT_RANGE * (0.5 + Math.random() * 0.5);
+            
+            // Fade in/out parameters (MKBHD style)
+            this.opacity = Math.random(); // Start with random opacity
+            this.targetOpacity = Math.random() > 0.3 ? 1 : 0; // 70% visible, 30% hidden
+            this.fadeSpeed = 0.003 + Math.random() * 0.005; // Random fade speed
+            this.fadeDelay = Math.random() * 3000; // Random delay before fading
+            this.fadeTimer = 0;
+        }
+        
+        update() {
+            // Gentle floating animation using sine waves
+            this.angleX += this.speedX;
+            this.angleY += this.speedY;
+            
+            // Calculate new position with sine wave for smooth bouncing
+            this.x = this.homeX + Math.sin(this.angleX) * this.floatRangeX;
+            this.y = this.homeY + Math.cos(this.angleY) * this.floatRangeY;
+            
+            // Update fade timer
+            this.fadeTimer += 16; // ~60fps
+            
+            // Fade in/out logic (MKBHD style - random appearing/disappearing)
+            if (this.fadeTimer > this.fadeDelay) {
+                // Gradually fade towards target opacity
+                if (this.opacity < this.targetOpacity) {
+                    this.opacity += this.fadeSpeed;
+                    if (this.opacity >= this.targetOpacity) {
+                        this.opacity = this.targetOpacity;
+                        // Set new target and delay
+                        this.targetOpacity = Math.random() > 0.3 ? 1 : 0;
+                        this.fadeDelay = 2000 + Math.random() * 4000;
+                        this.fadeTimer = 0;
+                    }
+                } else if (this.opacity > this.targetOpacity) {
+                    this.opacity -= this.fadeSpeed;
+                    if (this.opacity <= this.targetOpacity) {
+                        this.opacity = this.targetOpacity;
+                        // Set new target and delay
+                        this.targetOpacity = Math.random() > 0.3 ? 1 : 0;
+                        this.fadeDelay = 2000 + Math.random() * 4000;
+                        this.fadeTimer = 0;
+                    }
+                }
+            }
+        }
+        
+        draw(ctx) {
+            // Only draw if visible
+            if (this.opacity > 0.05) {
+                // Simple dot with opacity
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                
+                // Apply opacity to dot color
+                const theme = document.documentElement.getAttribute('data-theme');
+                const baseColor = theme === 'light' ? '0, 0, 0' : '255, 255, 255';
+                ctx.fillStyle = `rgba(${baseColor}, ${this.opacity * 0.5})`;
+                ctx.fill();
+            }
+        }
+        
+        getAbsolutePosition() {
+            return { x: this.x, y: this.y + this.yOffset };
+        }
+    }
+    
+    // Setup canvases
+    function setupCanvas(canvas, section) {
+        if (!canvas) return null;
+        
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = section.offsetHeight;
+        
+        return { canvas, ctx, section };
+    }
+    
+    let heroSetup = null;
+    let aboutSetup = null;
+    let skillsSetup = null;
+    let githubSetup = null;
+    let projectsSetup = null;
+    let contactSetup = null;
+    let footerSetup = null;
+    
+    if (heroCanvas) {
+        heroSetup = setupCanvas(heroCanvas, document.querySelector('.hero'));
+    }
+    
+    if (aboutCanvas) {
+        aboutSetup = setupCanvas(aboutCanvas, document.querySelector('.about'));
+    }
+    
+    if (skillsCanvas) {
+        skillsSetup = setupCanvas(skillsCanvas, document.querySelector('.skills'));
+    }
+    
+    if (githubCanvas) {
+        githubSetup = setupCanvas(githubCanvas, document.querySelector('.github-stats'));
+    }
+    
+    if (projectsCanvas) {
+        projectsSetup = setupCanvas(projectsCanvas, document.querySelector('.projects'));
+    }
+    
+    if (contactCanvas) {
+        contactSetup = setupCanvas(contactCanvas, document.querySelector('.contact'));
+    }
+    
+    if (footerCanvas) {
+        footerSetup = setupCanvas(footerCanvas, document.querySelector('.footer'));
+    }
+    
+    // Initialize grid-based dots (complete grid, no gaps)
+    function initDots() {
+        allDots = [];
+        let yOffset = 0;
+        
+        // Create complete grid for hero section
+        if (heroSetup) {
+            const cols = Math.ceil(heroSetup.canvas.width / GRID_SPACING) + 1;
+            const rows = Math.ceil(heroSetup.canvas.height / GRID_SPACING) + 1;
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const x = col * GRID_SPACING;
+                    const y = row * GRID_SPACING;
+                    const dot = new Dot(x, y, yOffset);
+                    dot.section = 'hero';
+                    allDots.push(dot);
+                }
+            }
+            yOffset += heroSetup.canvas.height;
+        }
+        
+        // Create complete grid for about section
+        if (aboutSetup) {
+            const cols = Math.ceil(aboutSetup.canvas.width / GRID_SPACING) + 1;
+            const rows = Math.ceil(aboutSetup.canvas.height / GRID_SPACING) + 1;
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const x = col * GRID_SPACING;
+                    const y = row * GRID_SPACING;
+                    const dot = new Dot(x, y, yOffset);
+                    dot.section = 'about';
+                    allDots.push(dot);
+                }
+            }
+            yOffset += aboutSetup.canvas.height;
+        }
+        
+        // Create complete grid for skills section
+        if (skillsSetup) {
+            const cols = Math.ceil(skillsSetup.canvas.width / GRID_SPACING) + 1;
+            const rows = Math.ceil(skillsSetup.canvas.height / GRID_SPACING) + 1;
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const x = col * GRID_SPACING;
+                    const y = row * GRID_SPACING;
+                    const dot = new Dot(x, y, yOffset);
+                    dot.section = 'skills';
+                    allDots.push(dot);
+                }
+            }
+            yOffset += skillsSetup.canvas.height;
+        }
+        
+        // Create complete grid for github section
+        if (githubSetup) {
+            const cols = Math.ceil(githubSetup.canvas.width / GRID_SPACING) + 1;
+            const rows = Math.ceil(githubSetup.canvas.height / GRID_SPACING) + 1;
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const x = col * GRID_SPACING;
+                    const y = row * GRID_SPACING;
+                    const dot = new Dot(x, y, yOffset);
+                    dot.section = 'github';
+                    allDots.push(dot);
+                }
+            }
+            yOffset += githubSetup.canvas.height;
+        }
+        
+        // Create complete grid for projects section
+        if (projectsSetup) {
+            const cols = Math.ceil(projectsSetup.canvas.width / GRID_SPACING) + 1;
+            const rows = Math.ceil(projectsSetup.canvas.height / GRID_SPACING) + 1;
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const x = col * GRID_SPACING;
+                    const y = row * GRID_SPACING;
+                    const dot = new Dot(x, y, yOffset);
+                    dot.section = 'projects';
+                    allDots.push(dot);
+                }
+            }
+            yOffset += projectsSetup.canvas.height;
+        }
+        
+        // Create complete grid for contact section
+        if (contactSetup) {
+            const cols = Math.ceil(contactSetup.canvas.width / GRID_SPACING) + 1;
+            const rows = Math.ceil(contactSetup.canvas.height / GRID_SPACING) + 1;
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const x = col * GRID_SPACING;
+                    const y = row * GRID_SPACING;
+                    const dot = new Dot(x, y, yOffset);
+                    dot.section = 'contact';
+                    allDots.push(dot);
+                }
+            }
+            yOffset += contactSetup.canvas.height;
+        }
+        
+        // Create complete grid for footer section
+        if (footerSetup) {
+            const cols = Math.ceil(footerSetup.canvas.width / GRID_SPACING) + 1;
+            const rows = Math.ceil(footerSetup.canvas.height / GRID_SPACING) + 1;
+            for (let row = 0; row < rows; row++) {
+                for (let col = 0; col < cols; col++) {
+                    const x = col * GRID_SPACING;
+                    const y = row * GRID_SPACING;
+                    const dot = new Dot(x, y, yOffset);
+                    dot.section = 'footer';
+                    allDots.push(dot);
+                }
+            }
+        }
+    }
+    
+    // Draw connections between nearby dots (MKBHD style)
+    function drawConnections(ctx, sectionDots) {
+        for (let i = 0; i < sectionDots.length; i++) {
+            // Skip if dot is nearly invisible
+            if (sectionDots[i].opacity < 0.1) continue;
+            
+            for (let j = i + 1; j < sectionDots.length; j++) {
+                // Skip if second dot is nearly invisible
+                if (sectionDots[j].opacity < 0.1) continue;
+                
+                const dot1 = sectionDots[i];
+                const dot2 = sectionDots[j];
+                
+                const dx = dot1.x - dot2.x;
+                const dy = dot1.y - dot2.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < CONNECTION_DISTANCE) {
+                    // Calculate opacity based on distance and dot opacity
+                    const distanceOpacity = (1 - distance / CONNECTION_DISTANCE) * 0.3;
+                    const avgDotOpacity = (dot1.opacity + dot2.opacity) / 2;
+                    const finalOpacity = distanceOpacity * avgDotOpacity;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(dot1.x, dot1.y);
+                    ctx.lineTo(dot2.x, dot2.y);
+                    ctx.strokeStyle = getLineColor(finalOpacity);
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+    
+    // Unified animation loop
+    function animate() {
+        // Update all dots
+        allDots.forEach(dot => dot.update());
+        
+        // Draw hero section
+        if (heroSetup) {
+            heroSetup.ctx.clearRect(0, 0, heroSetup.canvas.width, heroSetup.canvas.height);
+            const heroDots = allDots.filter(d => d.section === 'hero');
+            heroDots.forEach(dot => dot.draw(heroSetup.ctx));
+            drawConnections(heroSetup.ctx, heroDots);
+        }
+        
+        // Draw about section
+        if (aboutSetup) {
+            aboutSetup.ctx.clearRect(0, 0, aboutSetup.canvas.width, aboutSetup.canvas.height);
+            const aboutDots = allDots.filter(d => d.section === 'about');
+            aboutDots.forEach(dot => dot.draw(aboutSetup.ctx));
+            drawConnections(aboutSetup.ctx, aboutDots);
+        }
+        
+        // Draw skills section
+        if (skillsSetup) {
+            skillsSetup.ctx.clearRect(0, 0, skillsSetup.canvas.width, skillsSetup.canvas.height);
+            const skillsDots = allDots.filter(d => d.section === 'skills');
+            skillsDots.forEach(dot => dot.draw(skillsSetup.ctx));
+            drawConnections(skillsSetup.ctx, skillsDots);
+        }
+        
+        // Draw github section
+        if (githubSetup) {
+            githubSetup.ctx.clearRect(0, 0, githubSetup.canvas.width, githubSetup.canvas.height);
+            const githubDots = allDots.filter(d => d.section === 'github');
+            githubDots.forEach(dot => dot.draw(githubSetup.ctx));
+            drawConnections(githubSetup.ctx, githubDots);
+        }
+        
+        // Draw projects section
+        if (projectsSetup) {
+            projectsSetup.ctx.clearRect(0, 0, projectsSetup.canvas.width, projectsSetup.canvas.height);
+            const projectsDots = allDots.filter(d => d.section === 'projects');
+            projectsDots.forEach(dot => dot.draw(projectsSetup.ctx));
+            drawConnections(projectsSetup.ctx, projectsDots);
+        }
+        
+        // Draw contact section
+        if (contactSetup) {
+            contactSetup.ctx.clearRect(0, 0, contactSetup.canvas.width, contactSetup.canvas.height);
+            const contactDots = allDots.filter(d => d.section === 'contact');
+            contactDots.forEach(dot => dot.draw(contactSetup.ctx));
+            drawConnections(contactSetup.ctx, contactDots);
+        }
+        
+        // Draw footer section
+        if (footerSetup) {
+            footerSetup.ctx.clearRect(0, 0, footerSetup.canvas.width, footerSetup.canvas.height);
+            const footerDots = allDots.filter(d => d.section === 'footer');
+            footerDots.forEach(dot => dot.draw(footerSetup.ctx));
+            drawConnections(footerSetup.ctx, footerDots);
+        }
+        
+        requestAnimationFrame(animate);
+    }
+    
+    // Initialize and start animation
+    initDots();
+    animate();
+    
+    // Handle resize
+    window.addEventListener('resize', () => {
+        if (heroSetup) {
+            heroSetup.canvas.width = window.innerWidth;
+            heroSetup.canvas.height = heroSetup.section.offsetHeight;
+        }
+        if (aboutSetup) {
+            aboutSetup.canvas.width = window.innerWidth;
+            aboutSetup.canvas.height = aboutSetup.section.offsetHeight;
+        }
+        if (skillsSetup) {
+            skillsSetup.canvas.width = window.innerWidth;
+            skillsSetup.canvas.height = skillsSetup.section.offsetHeight;
+        }
+        if (githubSetup) {
+            githubSetup.canvas.width = window.innerWidth;
+            githubSetup.canvas.height = githubSetup.section.offsetHeight;
+        }
+        if (projectsSetup) {
+            projectsSetup.canvas.width = window.innerWidth;
+            projectsSetup.canvas.height = projectsSetup.section.offsetHeight;
+        }
+        if (contactSetup) {
+            contactSetup.canvas.width = window.innerWidth;
+            contactSetup.canvas.height = contactSetup.section.offsetHeight;
+        }
+        if (footerSetup) {
+            footerSetup.canvas.width = window.innerWidth;
+            footerSetup.canvas.height = footerSetup.section.offsetHeight;
+        }
+        initDots();
+    });
+    
+    // Initialize and start
+    initDots();
+    animate();
+    
+    // Handle theme changes
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            setTimeout(() => {
+                if (heroSetup) heroSetup.ctx.clearRect(0, 0, heroSetup.canvas.width, heroSetup.canvas.height);
+                if (aboutSetup) aboutSetup.ctx.clearRect(0, 0, aboutSetup.canvas.width, aboutSetup.canvas.height);
+                if (skillsSetup) skillsSetup.ctx.clearRect(0, 0, skillsSetup.canvas.width, skillsSetup.canvas.height);
+                if (githubSetup) githubSetup.ctx.clearRect(0, 0, githubSetup.canvas.width, githubSetup.canvas.height);
+                if (projectsSetup) projectsSetup.ctx.clearRect(0, 0, projectsSetup.canvas.width, projectsSetup.canvas.height);
+                if (contactSetup) contactSetup.ctx.clearRect(0, 0, contactSetup.canvas.width, contactSetup.canvas.height);
+                if (footerSetup) footerSetup.ctx.clearRect(0, 0, footerSetup.canvas.width, footerSetup.canvas.height);
+            }, 100);
+        });
+    }
+}
 
 // ===========================
 // Mobile Navigation Toggle
@@ -219,13 +628,6 @@ window.addEventListener('scroll', () => {
     }
     
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-    
-    // Enhance navbar shadow on scroll
-    if (window.scrollY > 50) {
-        navbar.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.3)';
-    } else {
-        navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.3)';
-    }
     
     // Show/hide scroll to top button
     if (window.scrollY > 500) {
@@ -644,6 +1046,22 @@ window.addEventListener('load', () => {
         document.body.style.transition = 'opacity 0.5s ease';
         document.body.style.opacity = '1';
     }, 100);
+});
+
+// ===========================
+// Make project images clickable
+// ===========================
+document.querySelectorAll('.project-image').forEach(imageDiv => {
+    imageDiv.style.cursor = 'pointer';
+    imageDiv.addEventListener('click', (e) => {
+        // Don't trigger if clicking on the action buttons
+        if (!e.target.closest('.project-link')) {
+            const demoLink = imageDiv.querySelector('.project-link[aria-label*="demo"]');
+            if (demoLink) {
+                window.open(demoLink.href, '_blank');
+            }
+        }
+    });
 });
 
 // ===========================
