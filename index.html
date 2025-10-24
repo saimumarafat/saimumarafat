@@ -42,8 +42,10 @@
     <script>
         (function() {
             try {
-                const savedTheme = localStorage.getItem('theme');
-                const theme = savedTheme || 'light';
+                var theme = 'light';
+                if (localStorage.getItem('theme') === 'dark') {
+                    theme = 'dark';
+                }
                 document.documentElement.setAttribute('data-theme', theme);
             } catch (e) {
                 document.documentElement.setAttribute('data-theme', 'light');

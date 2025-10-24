@@ -229,10 +229,17 @@ section {
 
 .logo {
     order: 2;
-    position: absolute;
-    left: 42%;
-    transform: translateX(-50%);
-    pointer-events: none;
+    position: static;
+    left: auto;
+    transform: none;
+    pointer-events: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 220px;
+    z-index: 2;
+    overflow: hidden;
 }
 
 .logo h2 {
