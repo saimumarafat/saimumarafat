@@ -1,11 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
-    <!-- Immediate Theme Script - Prevents Flash -->
+    <!-- Immediate Theme Script - Must run before any CSS -->
     <script>
+        // Set theme immediately - before any rendering
         (function() {
-            const theme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', theme);
+            try {
+                const savedTheme = localStorage.getItem('theme');
+                const theme = savedTheme || 'light';
+                document.documentElement.setAttribute('data-theme', theme);
+                console.log('Theme set to:', theme);
+            } catch (e) {
+                // Fallback if localStorage fails
+                document.documentElement.setAttribute('data-theme', 'light');
+                console.log('Theme set to light (fallback)');
+            }
         })();
     </script>
     
@@ -49,6 +58,40 @@
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="./styles.css">
+    
+    <!-- Critical inline CSS for instant theme application -->
+    <style>
+        /* Light theme defaults - applied instantly */
+        :root {
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F8F9FA;
+            --bg-tertiary: #F1F3F5;
+            --primary-color: #0EA5E9;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+        }
+        
+        html[data-theme="light"] {
+            background-color: #FFFFFF;
+            color: #0F172A;
+        }
+        
+        html[data-theme="dark"] {
+            --bg-primary: #000000;
+            --bg-secondary: #0A0A0A;
+            --primary-color: #00D9FF;
+            --text-primary: #FFFFFF;
+            background-color: #000000;
+            color: #FFFFFF;
+        }
+        
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            transition: none !important;
+        }
+    </style>
 </head>
 <body>
     <!-- Skip to main content for accessibility -->
