@@ -12,20 +12,28 @@ if (history.scrollRestoration) {
 }
 window.scrollTo(0, 0);
 
-const themeToggle = document.getElementById('themeToggle');
-const htmlElement = document.documentElement;
+// Initialize theme toggle when DOM is ready
+function initializeTheme() {
+    const themeToggle = document.getElementById('themeToggle');
+    const htmlElement = document.documentElement;
 
-// Check for saved theme preference or default to 'light'
-const currentTheme = localStorage.getItem('theme') || 'light';
-htmlElement.setAttribute('data-theme', currentTheme);
+    if (!themeToggle) return;
 
-// Toggle theme on button click
-themeToggle.addEventListener('click', () => {
-    const newTheme = htmlElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    htmlElement.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    updateGitHubStats(newTheme);
-});
+    // Toggle theme on button click
+    themeToggle.addEventListener('click', () => {
+        const newTheme = htmlElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        htmlElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateGitHubStats(newTheme);
+    });
+}
+
+// Call theme initialization when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeTheme);
+} else {
+    initializeTheme();
+}
 
 // ===========================
 // GitHub Stats Theme Switcher
@@ -108,25 +116,12 @@ window.addEventListener('load', () => {
     updateGitHubStats(currentTheme);
     startAutoRefresh(); // Start auto-refresh timer
     
-    // Add manual refresh button functionality if exists
-    const refreshBtn = document.getElementById('refreshStatsBtn');
-    if (refreshBtn) {
-        refreshBtn.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-            updateGitHubStats(currentTheme);
-            
-            // Visual feedback
-            refreshBtn.innerHTML = '<i class="fas fa-check"></i> Refreshed!';
-            setTimeout(() => {
-                refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh Stats';
-            }, 2000);
-        });
-    }
 });
 
 // ===========================
 // Animated Dot Background (MKBHD Style) - Auto Floating Animation
 // ===========================
+function initializeDotAnimation() {
 const heroCanvas = document.getElementById('dotCanvas');
 const aboutCanvas = document.getElementById('aboutDotCanvas');
 const skillsCanvas = document.getElementById('skillsDotCanvas');
@@ -560,6 +555,14 @@ if (heroCanvas || aboutCanvas || skillsCanvas || githubCanvas || projectsCanvas 
             }, 100);
         });
     }
+}
+}
+
+// Initialize dot animation when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeDotAnimation);
+} else {
+    initializeDotAnimation();
 }
 
 // ===========================
