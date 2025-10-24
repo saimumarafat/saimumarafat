@@ -238,21 +238,29 @@
                 <h2 class="section-title">GitHub Activity</h2>
                 <p class="github-subtitle">Check out my coding journey and contributions</p>
                 
+                <!-- Refresh Button -->
+                <div class="github-refresh">
+                    <button id="refreshStatsBtn" class="refresh-btn" aria-label="Refresh GitHub stats">
+                        <i class="fas fa-sync-alt"></i> Refresh Stats
+                    </button>
+                    <span class="refresh-info">Auto-refreshes every 30 minutes</span>
+                </div>
+                
                 <div class="github-content">
                     <!-- GitHub Overview Cards -->
                     <div class="github-overview">
                         <div class="stats-row">
                             <div class="stat-item">
-                                <img src="https://github-readme-stats.vercel.app/api?username=saimumarafat&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0A0A0A&title_color=00D9FF&icon_color=00D9FF&text_color=A0A0A0" alt="GitHub Stats" loading="lazy">
+                                <img id="github-stats-img" src="https://github-readme-stats.vercel.app/api?username=saimumarafat&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0A0A0A&title_color=00D9FF&icon_color=00D9FF&text_color=A0A0A0&cache_seconds=1800&random=1" alt="GitHub Stats" loading="lazy">
                             </div>
                             <div class="stat-item">
-                                <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=saimumarafat&layout=compact&theme=tokyonight&hide_border=true&bg_color=0A0A0A&title_color=00D9FF&text_color=A0A0A0" alt="Top Languages" loading="lazy">
+                                <img id="github-langs-img" src="https://github-readme-stats.vercel.app/api/top-langs/?username=saimumarafat&layout=compact&theme=tokyonight&hide_border=true&bg_color=0A0A0A&title_color=00D9FF&text_color=A0A0A0&cache_seconds=1800&random=1" alt="Top Languages" loading="lazy">
                             </div>
                         </div>
                         
                         <div class="stats-row">
                             <div class="stat-item stat-item-full">
-                                <img src="https://github-readme-streak-stats.herokuapp.com/?user=saimumarafat&theme=tokyonight&hide_border=true&background=0A0A0A&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF" alt="GitHub Streak" loading="lazy">
+                                <img id="github-streak-img" src="https://github-readme-streak-stats.herokuapp.com/?user=saimumarafat&theme=tokyonight&hide_border=true&background=0A0A0A&ring=00D9FF&fire=00D9FF&currStreakLabel=00D9FF&date_format=j%20M%5B%20Y%5D&random=1" alt="GitHub Streak" loading="lazy">
                             </div>
                         </div>
                         
@@ -260,7 +268,7 @@
                         <div class="contribution-section">
                             <h3>Contribution Activity</h3>
                             <div class="contribution-graph">
-                                <img src="https://github-readme-activity-graph.vercel.app/graph?username=saimumarafat&theme=tokyo-night&hide_border=true&bg_color=0A0A0A&color=00D9FF&line=00D9FF&point=A0A0A0&area=true&area_color=00D9FF" alt="GitHub Contribution Graph" loading="lazy">
+                                <img id="github-graph-img" src="https://github-readme-activity-graph.vercel.app/graph?username=saimumarafat&theme=tokyo-night&hide_border=true&bg_color=0A0A0A&color=00D9FF&line=00D9FF&point=A0A0A0&area=true&area_color=00D9FF&random=1" alt="GitHub Contribution Graph" loading="lazy">
                             </div>
                         </div>
                         
@@ -268,7 +276,7 @@
                         <div class="contribution-calendar-section">
                             <h3>Monthly Contribution Calendar</h3>
                             <div class="calendar-container">
-                                <img src="https://ghchart.rshah.org/00D9FF/saimumarafat" alt="GitHub Contribution Calendar" loading="lazy">
+                                <img id="github-calendar-img" src="https://ghchart.rshah.org/00D9FF/saimumarafat" alt="GitHub Contribution Calendar" loading="lazy">
                             </div>
                             <div class="calendar-stats">
                                 <div class="calendar-legend">
@@ -296,7 +304,7 @@
                         <div class="trophy-section">
                             <h3>Achievements</h3>
                             <div class="trophy-display">
-                                <img src="https://github-profile-trophy.vercel.app/?username=saimumarafat&theme=tokyonight&no-frame=true&no-bg=true&column=4&margin-w=15&margin-h=15" alt="GitHub Trophy" loading="lazy">
+                                <img id="github-trophy-img" src="https://github-profile-trophy.vercel.app/?username=saimumarafat&theme=tokyonight&no-frame=true&no-bg=true&column=4&margin-w=15&margin-h=15&random=1" alt="GitHub Trophy" loading="lazy">
                             </div>
                         </div>
                     </div>

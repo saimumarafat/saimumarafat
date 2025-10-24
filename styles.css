@@ -831,10 +831,59 @@ section {
     text-align: center;
     font-size: 1.2rem;
     color: var(--text-secondary);
-    margin: -40px 0 60px;
+    margin: -40px 0 30px;
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.github-refresh {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.refresh-btn {
+    padding: 12px 28px;
+    background: var(--primary-color);
+    color: #000;
+    border: 2px solid var(--primary-color);
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: var(--transition-base);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.refresh-btn:hover {
+    background: var(--secondary-color);
+    border-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 217, 255, 0.4);
+}
+
+.refresh-btn:active {
+    transform: translateY(0);
+}
+
+.refresh-btn i {
+    transition: transform 0.3s ease;
+}
+
+.refresh-btn:hover i {
+    transform: rotate(180deg);
+}
+
+.refresh-info {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-style: italic;
 }
 
 .github-content {
@@ -1601,7 +1650,16 @@ section {
     
     .github-subtitle {
         font-size: 1.1rem;
-        margin: -30px 0 40px;
+        margin: -30px 0 20px;
+    }
+    
+    .refresh-btn {
+        font-size: 0.9rem;
+        padding: 10px 24px;
+    }
+    
+    .refresh-info {
+        font-size: 0.8rem;
     }
     
     .contribution-section h3,

@@ -49,6 +49,7 @@ themeToggle.addEventListener('click', () => {
 function updateGitHubStats(theme) {
     const username = 'saimumarafat';
     const isDark = theme === 'dark';
+    const timestamp = new Date().getTime(); // Cache buster
     
     // Theme configurations
     const darkTheme = {
@@ -76,50 +77,80 @@ function updateGitHubStats(theme) {
     const config = isDark ? darkTheme : lightTheme;
     
     // Update GitHub Stats card
-    const statsImg = document.querySelector('.github-stats .stat-item:nth-child(1) img');
+    const statsImg = document.getElementById('github-stats-img');
     if (statsImg) {
-        statsImg.src = `https://github-readme-stats.vercel.app/api?username=${username}&show_icons=true&theme=${config.theme}&hide_border=true&bg_color=${config.bg_color}&title_color=${config.title_color}&icon_color=${config.icon_color}&text_color=${config.text_color}`;
+        statsImg.src = `https://github-readme-stats.vercel.app/api?username=${username}&show_icons=true&theme=${config.theme}&hide_border=true&bg_color=${config.bg_color}&title_color=${config.title_color}&icon_color=${config.icon_color}&text_color=${config.text_color}&cache_seconds=1800&t=${timestamp}`;
     }
     
     // Update Top Languages card
-    const langsImg = document.querySelector('.github-stats .stat-item:nth-child(2) img');
+    const langsImg = document.getElementById('github-langs-img');
     if (langsImg) {
-        langsImg.src = `https://github-readme-stats.vercel.app/api/top-langs/?username=${username}&layout=compact&theme=${config.theme}&hide_border=true&bg_color=${config.bg_color}&title_color=${config.title_color}&text_color=${config.text_color}`;
+        langsImg.src = `https://github-readme-stats.vercel.app/api/top-langs/?username=${username}&layout=compact&theme=${config.theme}&hide_border=true&bg_color=${config.bg_color}&title_color=${config.title_color}&text_color=${config.text_color}&cache_seconds=1800&t=${timestamp}`;
     }
     
     // Update Streak Stats
-    const streakImg = document.querySelector('.stat-item-full img');
+    const streakImg = document.getElementById('github-streak-img');
     if (streakImg) {
-        streakImg.src = `https://github-readme-streak-stats.herokuapp.com/?user=${username}&theme=${config.theme}&hide_border=true&background=${config.bg_color}&ring=${config.ring}&fire=${config.fire}&currStreakLabel=${config.currStreakLabel}`;
+        streakImg.src = `https://github-readme-streak-stats.herokuapp.com/?user=${username}&theme=${config.theme}&hide_border=true&background=${config.bg_color}&ring=${config.ring}&fire=${config.fire}&currStreakLabel=${config.currStreakLabel}&date_format=j%20M%5B%20Y%5D&t=${timestamp}`;
     }
     
     // Update Contribution Graph
-    const graphImg = document.querySelector('.contribution-graph img');
+    const graphImg = document.getElementById('github-graph-img');
     if (graphImg) {
         const graphTheme = isDark ? 'tokyo-night' : 'github-light';
         const graphBg = isDark ? '0A0A0A' : 'FFFFFF';
         const graphColor = isDark ? '00D9FF' : '0EA5E9';
-        graphImg.src = `https://github-readme-activity-graph.vercel.app/graph?username=${username}&theme=${graphTheme}&hide_border=true&bg_color=${graphBg}&color=${graphColor}&line=${graphColor}&point=${config.text_color}&area=true&area_color=${graphColor}`;
+        graphImg.src = `https://github-readme-activity-graph.vercel.app/graph?username=${username}&theme=${graphTheme}&hide_border=true&bg_color=${graphBg}&color=${graphColor}&line=${graphColor}&point=${config.text_color}&area=true&area_color=${graphColor}&t=${timestamp}`;
     }
     
     // Update Contribution Calendar
-    const calendarImg = document.querySelector('.calendar-container img');
+    const calendarImg = document.getElementById('github-calendar-img');
     if (calendarImg) {
         const calendarColor = isDark ? '00D9FF' : '0EA5E9';
-        calendarImg.src = `https://ghchart.rshah.org/${calendarColor}/${username}`;
+        calendarImg.src = `https://ghchart.rshah.org/${calendarColor}/${username}?t=${timestamp}`;
     }
     
     // Update Trophy
-    const trophyImg = document.querySelector('.trophy-display img');
+    const trophyImg = document.getElementById('github-trophy-img');
     if (trophyImg) {
         const trophyTheme = isDark ? 'tokyonight' : 'flat';
-        trophyImg.src = `https://github-profile-trophy.vercel.app/?username=${username}&theme=${trophyTheme}&no-frame=true&no-bg=true&column=4&margin-w=15&margin-h=15`;
+        trophyImg.src = `https://github-profile-trophy.vercel.app/?username=${username}&theme=${trophyTheme}&no-frame=true&no-bg=true&column=4&margin-w=15&margin-h=15&t=${timestamp}`;
     }
+}
+
+// ===========================
+// Auto-refresh GitHub Stats
+// Refreshes stats every 30 minutes
+// ===========================
+function startAutoRefresh() {
+    const REFRESH_INTERVAL = 30 * 60 * 1000; // 30 minutes in milliseconds
+    
+    setInterval(() => {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+        updateGitHubStats(currentTheme);
+        console.log('🔄 GitHub stats refreshed at:', new Date().toLocaleTimeString());
+    }, REFRESH_INTERVAL);
 }
 
 // Initialize GitHub stats with current theme
 window.addEventListener('load', () => {
     updateGitHubStats(currentTheme);
+    startAutoRefresh(); // Start auto-refresh timer
+    
+    // Add manual refresh button functionality if exists
+    const refreshBtn = document.getElementById('refreshStatsBtn');
+    if (refreshBtn) {
+        refreshBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            updateGitHubStats(currentTheme);
+            
+            // Visual feedback
+            refreshBtn.innerHTML = '<i class="fas fa-check"></i> Refreshed!';
+            setTimeout(() => {
+                refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh Stats';
+            }, 2000);
+        });
+    }
 });
 
 // ===========================
