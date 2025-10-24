@@ -25,10 +25,8 @@ Welcome to my GitHub! I build scalable and efficient web applications and consta
 ### [LinkShort](https://linkshortn.netlify.app)  
 A URL shortener that tracks clicks and manages links efficiently. Built with HTML, CSS, JavaScript, and PHP.
 
-### [Project 2](#)  
-Description of your second project, technologies used, and key highlights.
-
-*(Add more projects as needed)*  
+### [](#)  
+ 
 
 ---
 
