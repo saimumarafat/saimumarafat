@@ -40,6 +40,86 @@ themeToggle.addEventListener('click', () => {
     htmlElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
     updateThemeIcon(newTheme);
+    updateGitHubStats(newTheme);
+});
+
+// ===========================
+// GitHub Stats Theme Switcher
+// ===========================
+function updateGitHubStats(theme) {
+    const username = 'saimumarafat';
+    const isDark = theme === 'dark';
+    
+    // Theme configurations
+    const darkTheme = {
+        theme: 'tokyonight',
+        bg_color: '0A0A0A',
+        title_color: '00D9FF',
+        icon_color: '00D9FF',
+        text_color: 'A0A0A0',
+        ring: '00D9FF',
+        fire: '00D9FF',
+        currStreakLabel: '00D9FF'
+    };
+    
+    const lightTheme = {
+        theme: 'default',
+        bg_color: 'FFFFFF',
+        title_color: '0EA5E9',
+        icon_color: '8B5CF6',
+        text_color: '475569',
+        ring: '0EA5E9',
+        fire: '0EA5E9',
+        currStreakLabel: '0EA5E9'
+    };
+    
+    const config = isDark ? darkTheme : lightTheme;
+    
+    // Update GitHub Stats card
+    const statsImg = document.querySelector('.github-stats .stat-item:nth-child(1) img');
+    if (statsImg) {
+        statsImg.src = `https://github-readme-stats.vercel.app/api?username=${username}&show_icons=true&theme=${config.theme}&hide_border=true&bg_color=${config.bg_color}&title_color=${config.title_color}&icon_color=${config.icon_color}&text_color=${config.text_color}`;
+    }
+    
+    // Update Top Languages card
+    const langsImg = document.querySelector('.github-stats .stat-item:nth-child(2) img');
+    if (langsImg) {
+        langsImg.src = `https://github-readme-stats.vercel.app/api/top-langs/?username=${username}&layout=compact&theme=${config.theme}&hide_border=true&bg_color=${config.bg_color}&title_color=${config.title_color}&text_color=${config.text_color}`;
+    }
+    
+    // Update Streak Stats
+    const streakImg = document.querySelector('.stat-item-full img');
+    if (streakImg) {
+        streakImg.src = `https://github-readme-streak-stats.herokuapp.com/?user=${username}&theme=${config.theme}&hide_border=true&background=${config.bg_color}&ring=${config.ring}&fire=${config.fire}&currStreakLabel=${config.currStreakLabel}`;
+    }
+    
+    // Update Contribution Graph
+    const graphImg = document.querySelector('.contribution-graph img');
+    if (graphImg) {
+        const graphTheme = isDark ? 'tokyo-night' : 'github-light';
+        const graphBg = isDark ? '0A0A0A' : 'FFFFFF';
+        const graphColor = isDark ? '00D9FF' : '0EA5E9';
+        graphImg.src = `https://github-readme-activity-graph.vercel.app/graph?username=${username}&theme=${graphTheme}&hide_border=true&bg_color=${graphBg}&color=${graphColor}&line=${graphColor}&point=${config.text_color}&area=true&area_color=${graphColor}`;
+    }
+    
+    // Update Contribution Calendar
+    const calendarImg = document.querySelector('.calendar-container img');
+    if (calendarImg) {
+        const calendarColor = isDark ? '00D9FF' : '0EA5E9';
+        calendarImg.src = `https://ghchart.rshah.org/${calendarColor}/${username}`;
+    }
+    
+    // Update Trophy
+    const trophyImg = document.querySelector('.trophy-display img');
+    if (trophyImg) {
+        const trophyTheme = isDark ? 'tokyonight' : 'flat';
+        trophyImg.src = `https://github-profile-trophy.vercel.app/?username=${username}&theme=${trophyTheme}&no-frame=true&no-bg=true&column=4&margin-w=15&margin-h=15`;
+    }
+}
+
+// Initialize GitHub stats with current theme
+window.addEventListener('load', () => {
+    updateGitHubStats(currentTheme);
 });
 
 // ===========================

@@ -818,6 +818,193 @@ section {
 }
 
 /* ===========================
+   GitHub Stats Section
+   =========================== */
+.github-stats {
+    padding: 120px 0;
+    background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.github-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin: -40px 0 60px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.github-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.github-overview {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+}
+
+.stat-item {
+    background: var(--bg-tertiary);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    transition: var(--transition-base);
+    overflow: hidden;
+}
+
+.stat-item:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.stat-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+.stat-item-full {
+    grid-column: 1 / -1;
+}
+
+.contribution-section,
+.contribution-calendar-section,
+.trophy-section {
+    background: var(--bg-tertiary);
+    border-radius: 16px;
+    padding: 30px;
+    border: 1px solid rgba(0, 217, 255, 0.2);
+    transition: var(--transition-base);
+}
+
+.contribution-section:hover,
+.contribution-calendar-section:hover,
+.trophy-section:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-medium);
+}
+
+.contribution-section h3,
+.contribution-calendar-section h3,
+.trophy-section h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.contribution-graph,
+.calendar-container,
+.trophy-display {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.contribution-graph img,
+.calendar-container img,
+.trophy-display img {
+    width: 100%;
+    min-width: 800px;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+.calendar-container {
+    background: var(--bg-secondary);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.calendar-container img {
+    min-width: 700px;
+    margin: 0 auto;
+}
+
+.calendar-stats {
+    margin-top: 20px;
+}
+
+.calendar-legend {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    border: 1px solid rgba(0, 217, 255, 0.3);
+}
+
+.legend-none {
+    background: var(--bg-secondary);
+}
+
+.legend-low {
+    background: rgba(0, 217, 255, 0.3);
+}
+
+.legend-medium {
+    background: rgba(0, 217, 255, 0.6);
+}
+
+.legend-high {
+    background: rgba(0, 217, 255, 1);
+}
+
+.trophy-display img {
+    min-width: 600px;
+}
+
+.github-cta {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.github-cta .btn {
+    font-size: 1.1rem;
+    padding: 16px 40px;
+}
+
+/* Light theme adjustments for GitHub stats */
+[data-theme="light"] .stat-item img,
+[data-theme="light"] .contribution-graph img,
+[data-theme="light"] .trophy-display img {
+    /* Light theme will use different color parameters in the URLs */
+    /* These would need to be swapped via JavaScript if you want dynamic theme switching */
+    filter: brightness(0.95);
+}
+
+/* ===========================
    Projects Section - Professional Portfolio
    =========================== */
 .projects {
@@ -1394,6 +1581,35 @@ section {
         grid-template-columns: 1fr;
     }
     
+    .stats-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .contribution-graph img,
+    .calendar-container img,
+    .trophy-display img {
+        min-width: 100%;
+    }
+    
+    .calendar-legend {
+        gap: 15px;
+    }
+    
+    .legend-item {
+        font-size: 0.85rem;
+    }
+    
+    .github-subtitle {
+        font-size: 1.1rem;
+        margin: -30px 0 40px;
+    }
+    
+    .contribution-section h3,
+    .contribution-calendar-section h3,
+    .trophy-section h3 {
+        font-size: 1.3rem;
+    }
+    
     .projects-grid {
         grid-template-columns: 1fr;
     }
@@ -1533,6 +1749,32 @@ section {
     
     .skill-card {
         padding: 35px 25px;
+    }
+    
+    .stat-item,
+    .contribution-section,
+    .contribution-calendar-section,
+    .trophy-section {
+        padding: 25px 20px;
+    }
+    
+    .calendar-container {
+        padding: 15px;
+    }
+    
+    .calendar-legend {
+        gap: 12px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .legend-item {
+        font-size: 0.8rem;
+    }
+    
+    .legend-color {
+        width: 14px;
+        height: 14px;
     }
     
     .skill-icon {
