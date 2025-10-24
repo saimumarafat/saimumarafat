@@ -1,25 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Immediate Theme Script - Must run before any CSS -->
+    <meta charset="UTF-8">
+    
+    <!-- CRITICAL: Inline styles MUST come first to prevent flash -->
+    <style>
+        /* Prevent any dark flash - applied before anything else */
+        html, body {
+            background-color: #FFFFFF !important;
+            color: #0F172A !important;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Light theme variables - instant application */
+        :root, html {
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F8F9FA;
+            --bg-tertiary: #F1F3F5;
+            --primary-color: #0EA5E9;
+            --secondary-color: #06B6D4;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+        }
+        
+        /* Dark theme override */
+        html[data-theme="dark"], html[data-theme="dark"] body {
+            --bg-primary: #000000;
+            --bg-secondary: #0A0A0A;
+            --bg-tertiary: #111111;
+            --primary-color: #00D9FF;
+            --secondary-color: #00F5FF;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A0A0A0;
+            background-color: #000000 !important;
+            color: #FFFFFF !important;
+        }
+    </style>
+    
+    <!-- Immediate Theme Script -->
     <script>
-        // Set theme immediately - before any rendering
         (function() {
             try {
                 const savedTheme = localStorage.getItem('theme');
                 const theme = savedTheme || 'light';
                 document.documentElement.setAttribute('data-theme', theme);
-                console.log('Theme set to:', theme);
             } catch (e) {
-                // Fallback if localStorage fails
                 document.documentElement.setAttribute('data-theme', 'light');
-                console.log('Theme set to light (fallback)');
             }
         })();
     </script>
     
-    <!-- Meta Tags -->
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
@@ -93,7 +124,7 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: #FFFFFF; color: #0F172A;">
     <!-- Skip to main content for accessibility -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
     
