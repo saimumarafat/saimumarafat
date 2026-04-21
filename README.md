@@ -8,7 +8,7 @@ Welcome to my GitHub! I build scalable and efficient web applications and consta
 
 ## Skills
 
-**Frontend:** HTML5, CSS3, JavaScript, React, Tailwind CSS  
+**Frontend:** HTML5, CSS3, JavaScript, React, Tailwind CSS, Swift 
 **Backend:** Node.js, Express.js, PHP, MySQL, MongoDB  
 **Tools & Platforms:** Git, GitHub, Docker, Netlify, VS Code, Figma  
 
