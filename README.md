@@ -1,8 +1,8 @@
 # Saimum Arafat
 
-## Web Developer | MIST Student
+## Full Stack App & UI Developer
 
-Welcome to my GitHub! I build scalable and efficient web applications and constantly explore new technologies to improve my skills.
+Welcome to my GitHub! I build scalable and efficient applications and constantly explore new technologies to improve my skills.
 
 ---
 
