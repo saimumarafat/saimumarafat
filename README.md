@@ -14,22 +14,6 @@ Welcome to my GitHub! I build scalable and efficient applications and constantly
 
 ---
 
-## GitHub Stats
-
-![Saimum Arafat's GitHub Stats](https://github-readme-stats.vercel.app/api?username=SaimumArafat&show_icons=true&theme=radical)
-
----
-
-## Projects
-
-### [LinkShort](https://linkshortn.netlify.app)  
-A URL shortener that tracks clicks and manages links efficiently. Built with HTML, CSS, JavaScript, and PHP.
-
-### [](#)  
- 
-
----
-
 ## Contact
 
 - Email: [saimumarafat4@gmail.com](mailto:saimumarafat4@gmail.com)  
